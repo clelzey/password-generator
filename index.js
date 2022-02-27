@@ -17,6 +17,8 @@ const symbolEl = document.getElementById("symbols")
 const lengthEl = document.getElementById("length")
 const lengthValueEl = document.getElementById("length-value")
 const passwordAreaEls = document.querySelectorAll(".password_area")
+const snackbarEl = document.getElementById("snackbar")
+
 
 passwordAreaEls.forEach( item => {
   item.addEventListener('click', () => {
@@ -36,17 +38,19 @@ passwordAreaEls.forEach( item => {
 })
 
 function snackbar(passwordText) {
-  const snackbarText = document.getElementById("snackbar")
-  snackbarText.textContent = "Copied the text: " + passwordText
-  snackbarText.className = "show"
+  /* Get the snackbar element and change the text to the passwordText */
+  snackbarEl.textContent = "Copied the text: " + passwordText
+  snackbarEl.className = "show"
   setTimeout(function(){
-    snackbarText.className = snackbarText.className.replace("show", "");
+    snackbarEl.className = snackbarEl.className.replace("show", "");
     }, 3000)
 }
 
+/* Set the length label to the value of the slider */
 lengthValueEl.innerText = lengthEl.value
 lengthEl.oninput = function() { lengthValueEl.innerHTML = this.value }
 
+/* Functionality for the button to generate passwords */
 genPwEl.addEventListener('click', () => {
     checkboxErrorEl.textContent = ""
     let passwordChars = ""
@@ -60,6 +64,7 @@ genPwEl.addEventListener('click', () => {
     pwEl4.value = createPassword(passwordChars, passwordLength)
 })
 
+/* Create a password with the selected characters and length */
 function createPassword(chars, len) {
     let newPassword = []
     for (let i = 0; i < len; i++) {
@@ -69,6 +74,7 @@ function createPassword(chars, len) {
    return newPassword.join('')
 }
 
+/* Return string of selected characters, or provide error warning. */
 function buildChars(passChars) {
     let check = false
     if (upperEl.checked) {
