@@ -16,6 +16,33 @@ const numberEl = document.getElementById("numbers")
 const symbolEl = document.getElementById("symbols")
 const lengthEl = document.getElementById("length")
 const lengthValueEl = document.getElementById("length-value")
+const passwordAreaEls = document.querySelectorAll(".password_area")
+
+passwordAreaEls.forEach( item => {
+  item.addEventListener('click', () => {
+    /* Get the text field to copy to clip board */
+    const copyText = item;
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+
+    /* Snackbar notice of the copied text */
+    snackbar(copyText.value)
+  })
+})
+
+function snackbar(passwordText) {
+  const snackbarText = document.getElementById("snackbar")
+  snackbarText.textContent = "Copied the text: " + passwordText
+  snackbarText.className = "show"
+  setTimeout(function(){
+    snackbarText.className = snackbarText.className.replace("show", "");
+    }, 3000)
+}
 
 lengthValueEl.innerText = lengthEl.value
 lengthEl.oninput = function() { lengthValueEl.innerHTML = this.value }
@@ -26,14 +53,14 @@ genPwEl.addEventListener('click', () => {
     passwordChars = buildChars(passwordChars)
     passwordChars = passwordChars.split("")
     const passwordLength = lengthEl.value
-    
-    pwEl1.value = createPasword(passwordChars, passwordLength)
-    pwEl2.value = createPasword(passwordChars, passwordLength)
-    pwEl3.value = createPasword(passwordChars, passwordLength)
-    pwEl4.value = createPasword(passwordChars, passwordLength)
+
+    pwEl1.value = createPassword(passwordChars, passwordLength)
+    pwEl2.value = createPassword(passwordChars, passwordLength)
+    pwEl3.value = createPassword(passwordChars, passwordLength)
+    pwEl4.value = createPassword(passwordChars, passwordLength)
 })
 
-function createPasword(chars, len) {
+function createPassword(chars, len) {
     let newPassword = []
     for (let i = 0; i < len; i++) {
         let newChar = chars[ Math.floor( Math.random() * chars.length)]
@@ -47,19 +74,19 @@ function buildChars(passChars) {
     if (upperEl.checked) {
         passChars += upperChars
         check = true
-    } 
+    }
     if (lowerEl.checked) {
         passChars += lowerChars
         check = true
-    } 
+    }
     if (numberEl.checked) {
         passChars += numberChars
         check = true
-    } 
+    }
     if (symbolEl.checked) {
         passChars += symbolChars
         check = true
-    } 
+    }
     if (!check) {
         checkboxErrorEl.textContent = "Must select at least one character type"
     }
