@@ -72,29 +72,35 @@ very flat.
 
 ```html
 <div class="generator__passwords">
-  <input class="generator__passwords_password password_area" type="text" id="pw_el_1">
-  <input class="generator__passwords_password password_area" type="text" id="pw_el_2">
-  <input class="generator__passwords_password password_area" type="text" id="pw_el_3">
-  <input class="generator__passwords_password password_area" type="text" id="pw_el_4">
+  <input class="generator__passwords_password password_area" type="text">
+  <input class="generator__passwords_password password_area" type="text">
+  <input class="generator__passwords_password password_area" type="text">
+  <input class="generator__passwords_password password_area" type="text">
 </div>
 ```
 
-The event listener added to the button for generating a password is very efficient at creating the text for each of the
-password areas. In the future I would like to refactor this to use `.forEach()` to assign the passwords, further reducing
-the amount of code.
+The event listener added to the button for generating a password is very efficient at creating the text using
+`.forEach()` to populate the password areas. In a previous version, the password and password characters where
+made into arrays for random selection. I remembered that strings were as easy to access from and was able to
+reduce the code by several lines. A check is now made to make sure that a selection of characters is being made
+before creating the passwords.
 
 ```js
 genPwEl.addEventListener('click', () => {
   checkboxErrorEl.textContent = ""
   let passwordChars = ""
   passwordChars = buildChars(passwordChars)
-  passwordChars = passwordChars.split("")
-  const passwordLength = lengthEl.value
+  if (passwordChars) {
+    const passwordLength = lengthEl.value
 
-  pwEl1.value = createPassword(passwordChars, passwordLength)
-  pwEl2.value = createPassword(passwordChars, passwordLength)
-  pwEl3.value = createPassword(passwordChars, passwordLength)
-  pwEl4.value = createPassword(passwordChars, passwordLength)
+    passwordAreaEls.forEach( element => {
+      element.value = createPassword(passwordChars, passwordLength)
+    })
+  } else {
+    passwordAreaEls.forEach( element => {
+      element.value = ""
+    })
+  }
 })
 ```
 
@@ -103,6 +109,12 @@ genPwEl.addEventListener('click', () => {
 Beside using `.forEach()` to reduce the JS needed for the eventListener to assign the randomly generated passwords. I plan
 to replace the series of `if` statements used to build the characters for the password with a `switch` statement.
 
+UPDATE: The use of `.forEach()` when creating the passwords was implemented and several lines of unused code was removed.
+As I researched how to implement a `switch` statement for this application, I determined that the functionality I needed
+was not going to be achieved with a `switch` statement. For now the development on my application is complete. Someday I
+would like to redevelop this project using React so that I can get instant functionality more like the page I used for
+inspiration.
+
 ### Useful resources
 
 - [Kallmanation - Styling a checkbox with only CSS](https://www.kallmanation.com/styling-a-checkbox-with-only-css) - I
@@ -110,7 +122,8 @@ used this resource to style the checkboxes.
 - [W3 schools - How TO - Snackbar / Toast](https://www.w3schools.com/howto/howto_js_snackbar.asp) - This resource was used
 to create the snackbar notice when passwords are copied to the clipboard.
 - [W3 schools - How TO - Range Slicers](https://www.w3schools.com/howto/howto_js_rangeslider.asp) - This resource was used
-to create the range slider and its connection to the label used on the page.
+to create the range slider and its connection to the label used on the page. Thanks to Connor over on the Scrimba Discord
+server for this resource.
 
 ## Author
 

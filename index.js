@@ -3,13 +3,8 @@ const upperChars ='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const numberChars = '1234567890'
 const symbolChars = '!@#$%^&*=+?<>'
 
-
 const genPwEl = document.getElementById("gen_pw")
 const checkboxErrorEl = document.getElementById("checkbox-error")
-const pwEl1 = document.getElementById("pw_el_1")
-const pwEl2 = document.getElementById("pw_el_2")
-const pwEl3 = document.getElementById("pw_el_3")
-const pwEl4 = document.getElementById("pw_el_4")
 const upperEl = document.getElementById("uppercase")
 const lowerEl = document.getElementById("lowercase")
 const numberEl = document.getElementById("numbers")
@@ -39,7 +34,7 @@ passwordAreaEls.forEach( item => {
 
 function snackbar(passwordText) {
   /* Get the snackbar element and change the text to the passwordText */
-  snackbarEl.textContent = "Copied the text: " + passwordText
+  snackbarEl.textContent = `Copied the password: ${passwordText}`
   snackbarEl.className = "show"
   setTimeout(function(){
     snackbarEl.className = snackbarEl.className.replace("show", "");
@@ -55,23 +50,27 @@ genPwEl.addEventListener('click', () => {
     checkboxErrorEl.textContent = ""
     let passwordChars = ""
     passwordChars = buildChars(passwordChars)
-    passwordChars = passwordChars.split("")
-    const passwordLength = lengthEl.value
+    if (passwordChars) {
+        const passwordLength = lengthEl.value
 
-    pwEl1.value = createPassword(passwordChars, passwordLength)
-    pwEl2.value = createPassword(passwordChars, passwordLength)
-    pwEl3.value = createPassword(passwordChars, passwordLength)
-    pwEl4.value = createPassword(passwordChars, passwordLength)
+        passwordAreaEls.forEach( element => {
+            element.value = createPassword(passwordChars, passwordLength)
+        })
+    } else {
+        passwordAreaEls.forEach( element => {
+            element.value = ""
+        })
+    }
 })
 
 /* Create a password with the selected characters and length */
 function createPassword(chars, len) {
-    let newPassword = []
+    let newPassword = ''
     for (let i = 0; i < len; i++) {
         let newChar = chars[ Math.floor( Math.random() * chars.length)]
-        newPassword.push(newChar)
+        newPassword += newChar
     }
-   return newPassword.join('')
+   return newPassword
 }
 
 /* Return string of selected characters, or provide error warning. */
