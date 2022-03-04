@@ -21,8 +21,8 @@
 </head>
 
 <body>
-<div class="generator">
-  <div class="generator__header">
+<main class="generator">
+  <section class="generator__header">
     <h1 class="generator__header_title">Generate a <br><span>random password</span></h1>
     <h3 class="generator__header_subtitle">Never use an insecure password again.</h3>
     <div class="generator__header_options">
@@ -30,33 +30,25 @@
         <label>
           <input type="checkbox"
                  class="opt-checkbox"
-                 id="uppercase"
-                 name="uppercase"
-                 value="Uppercase">
+                 id="uppercase">
           <span>Uppercase</span>
         </label><br>
         <label>
           <input type="checkbox"
                  class="opt-checkbox"
-                 id="lowercase"
-                 name="lowercase"
-                 value="Lowercase">
+                 id="lowercase">
           <span>Lowercase</span>
         </label><br>
         <label>
           <input type="checkbox"
                  class="opt-checkbox"
-                 id="numbers"
-                 name="numbers"
-                 value="Numbers">
+                 id="numbers">
           <span>Numbers</span>
         </label><br>
         <label for="symbols">
           <input type="checkbox"
                  class="opt-checkbox"
-                 id="symbols"
-                 name="symbols"
-                 value="Symbols">
+                 id="symbols">
           <span>Symbols</span>
         </label>
         <p class="slide-type">Password length: <span id="length-value"></span></p>
@@ -78,17 +70,19 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="generator__passwords">
-    <input class="generator__passwords_password password_area" type="text" id="pw_el_1">
-    <input class="generator__passwords_password password_area" type="text" id="pw_el_2">
-    <input class="generator__passwords_password password_area" type="text" id="pw_el_3">
-    <input class="generator__passwords_password password_area" type="text" id="pw_el_4">
-  </div>
-  <div id="snackbar"></div>
-</div>
+  </section>
+  <section class="generator__passwords">
+    <input class="generator__passwords_password password_area" type="text" onkeydown="return false">
+    <input class="generator__passwords_password password_area" type="text" onkeydown="return false">
+    <input class="generator__passwords_password password_area" type="text" onkeydown="return false">
+    <input class="generator__passwords_password password_area" type="text" onkeydown="return false">
+  </section>
+  <section id="snackbar"></section>
+</main>
 <footer>
-  <a href="https://www.flaticon.com/free-icons/security" title="security icons">Security icons created by Freepik - Flaticon</a>
+  <a href="https://www.flaticon.com/free-icons/security" title="security icons">
+    Security icons created by Freepik - Flaticon
+  </a>
   <p>© 2022 Christy Elzey</p>
 </footer>
 <script src="index.js"></script>
